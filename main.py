@@ -20,6 +20,5 @@ def share():
 @app.route("/")
 def home():
     return "<h3>✅ TSQA Bot يعمل! استخدم /ask?q=سؤالك</h3>"
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=10000)
