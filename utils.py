@@ -1,17 +1,15 @@
 import json
 import pandas as pd
-import difflib
+from fuzzywuzzy import fuzz
 
 def process_question(question):
     with open("laws_database.json", encoding="utf-8") as f:
         data = json.load(f)
 
-    النصوص = [item["النص"] for item in data]
-    matches = difflib.get_close_matches(question, النصوص, n=3, cutoff=0.3)
-
     النتائج = []
     for item in data:
-        if item["النص"] in matches:
+        درجة_التشابه = fuzz.partial_ratio(question, item["النص"])
+        if درجة_التشابه >= 70:  # يمكنك تعديل الرقم حسب درجة الحساسية
             النتائج.append(f"📘 {item['النظام']} - {item['رقم']}:\n{item['النص']}")
 
     if not النتائج:
